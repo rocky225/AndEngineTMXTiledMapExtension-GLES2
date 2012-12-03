@@ -97,6 +97,12 @@ public class TMXLoader {
 	// Methods
 	// ===========================================================
 
+	/**
+	 * 通过传入一个路径,解析XML(即tmx文件)
+	 * @param pAssetPath
+	 * @return TMXTiledMap
+	 * @throws TMXLoadException
+	 */
 	public TMXTiledMap loadFromAsset(final String pAssetPath) throws TMXLoadException {
 		try {
 			return this.load(this.mAssetManager.open(pAssetPath));
@@ -105,6 +111,13 @@ public class TMXLoader {
 		}
 	}
 
+	/**
+	 * 通过传入IO流,解析XML(即tmx文件)
+	 * 
+	 * @param pInputStream
+	 * @return TMXTiledMap
+	 * @throws TMXLoadException
+	 */
 	public TMXTiledMap load(final InputStream pInputStream) throws TMXLoadException {
 		try {
 			final SAXParserFactory spf = SAXParserFactory.newInstance();

@@ -59,6 +59,13 @@ public class TSXLoader {
 	// Methods
 	// ===========================================================
 
+	/**
+	 * 通过另外一个文件创建TMXTileSet
+	 * @param pFirstGlobalTileID firstId
+	 * @param pAssetPath 文件路径
+	 * @return
+	 * @throws TSXLoadException
+	 */
 	public TMXTileSet loadFromAsset(final int pFirstGlobalTileID, final String pAssetPath) throws TSXLoadException {
 		try {
 			return this.load(pFirstGlobalTileID, this.mAssetManager.open(pAssetPath));

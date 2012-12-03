@@ -66,6 +66,15 @@ public class TMXParser extends DefaultHandler implements TMXConstants {
 	// Constructors
 	// ===========================================================
 
+	/**
+	 * 通过必要的参数构造一个TMX解析器(TMXParser)
+	 * 
+	 * @param pAssetManager
+	 * @param pTextureManager
+	 * @param pTextureOptions
+	 * @param pVertexBufferObjectManager
+	 * @param pTMXTilePropertyListener
+	 */
 	public TMXParser(final AssetManager pAssetManager, final TextureManager pTextureManager, final TextureOptions pTextureOptions, final VertexBufferObjectManager pVertexBufferObjectManager, final ITMXTilePropertiesListener pTMXTilePropertyListener) {
 		this.mAssetManager = pAssetManager;
 		this.mTextureManager = pTextureManager;
@@ -88,17 +97,20 @@ public class TMXParser extends DefaultHandler implements TMXConstants {
 
 	@Override
 	public void startElement(final String pUri, final String pLocalName, final String pQualifiedName, final Attributes pAttributes) throws SAXException {
+		//如果当前为map
 		if(pLocalName.equals(TMXConstants.TAG_MAP)){
 			this.mInMap = true;
 			this.mTMXTiledMap = new TMXTiledMap(pAttributes);
-		} else if(pLocalName.equals(TMXConstants.TAG_TILESET)){
+		} else if(pLocalName.equals(TMXConstants.TAG_TILESET)){//tileset
 			this.mInTileset = true;
 			final TMXTileSet tmxTileSet;
+			//获取source的参数
 			final String tsxTileSetSource = pAttributes.getValue("", TMXConstants.TAG_TILESET_ATTRIBUTE_SOURCE);
 			if(tsxTileSetSource == null) {
 				tmxTileSet = new TMXTileSet(pAttributes, this.mTextureOptions);
 			} else {
 				try {
+					//firstgid
 					final int firstGlobalTileID = SAXUtils.getIntAttribute(pAttributes, TMXConstants.TAG_TILESET_ATTRIBUTE_FIRSTGID, 1);
 					final TSXLoader tsxLoader = new TSXLoader(this.mAssetManager, this.mTextureManager, this.mTextureOptions);
 					tmxTileSet = tsxLoader.loadFromAsset(firstGlobalTileID, tsxTileSetSource);
@@ -107,21 +119,22 @@ public class TMXParser extends DefaultHandler implements TMXConstants {
 				}
 			}
 			this.mTMXTiledMap.addTMXTileSet(tmxTileSet);
-		} else if(pLocalName.equals(TMXConstants.TAG_IMAGE)){
+		} else if(pLocalName.equals(TMXConstants.TAG_IMAGE)){//image
 			this.mInImage = true;
 			final ArrayList<TMXTileSet> tmxTileSets = this.mTMXTiledMap.getTMXTileSets();
 			tmxTileSets.get(tmxTileSets.size() - 1).setImageSource(this.mAssetManager, this.mTextureManager, pAttributes);
-		} else if(pLocalName.equals(TMXConstants.TAG_TILE)) {
+		} else if(pLocalName.equals(TMXConstants.TAG_TILE)) {//tile
 			this.mInTile = true;
 			if(this.mInTileset) {
+				//tile id
 				this.mLastTileSetTileID = SAXUtils.getIntAttributeOrThrow(pAttributes, TMXConstants.TAG_TILE_ATTRIBUTE_ID);
 			} else if(this.mInData) {
 				final ArrayList<TMXLayer> tmxLayers = this.mTMXTiledMap.getTMXLayers();
 				tmxLayers.get(tmxLayers.size() - 1).initializeTMXTileFromXML(pAttributes, this.mTMXTilePropertyListener);
 			}
-		} else if(pLocalName.equals(TMXConstants.TAG_PROPERTIES)) {
+		} else if(pLocalName.equals(TMXConstants.TAG_PROPERTIES)) {//properties
 			this.mInProperties = true;
-		} else if(this.mInProperties && pLocalName.equals(TMXConstants.TAG_PROPERTY)) {
+		} else if(this.mInProperties && pLocalName.equals(TMXConstants.TAG_PROPERTY)) {//property并且要包含在properties内部
 			this.mInProperty = true;
 			if(this.mInTile) {
 				final ArrayList<TMXTileSet> tmxTileSets = this.mTMXTiledMap.getTMXTileSets();

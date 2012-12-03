@@ -44,6 +44,10 @@ public class TMXTiledMap implements TMXConstants {
 	// Constructors
 	// ===========================================================
 
+	/**
+	 * 通过Attribute获取参数:orientation,width,height,tilewidth,tileheight
+	 * @param pAttributes
+	 */
 	TMXTiledMap(final Attributes pAttributes) {
 		this.mOrientation = pAttributes.getValue("", TMXConstants.TAG_MAP_ATTRIBUTE_ORIENTATION);
 		if(!this.mOrientation.equals(TMXConstants.TAG_MAP_ATTRIBUTE_ORIENTATION_VALUE_ORTHOGONAL)) {
@@ -96,6 +100,10 @@ public class TMXTiledMap implements TMXConstants {
 		return this.mTileHeight;
 	}
 
+	/**
+	 * 加入一个tileset
+	 * @param pTMXTileSet
+	 */
 	void addTMXTileSet(final TMXTileSet pTMXTileSet) {
 		this.mTMXTileSets.add(pTMXTileSet);
 	}

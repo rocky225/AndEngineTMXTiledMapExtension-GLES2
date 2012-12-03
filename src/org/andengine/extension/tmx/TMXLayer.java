@@ -217,6 +217,15 @@ public class TMXLayer extends SpriteBatch implements TMXConstants {
 		this.addTileByGlobalTileID(SAXUtils.getIntAttributeOrThrow(pAttributes, TMXConstants.TAG_TILE_ATTRIBUTE_GID), pTMXTilePropertyListener);
 	}
 
+	/**
+	 * 解析Data中的数据
+	 * @param pDataString 内容
+	 * @param pDataEncoding 编码格式
+	 * @param pDataCompression 解析器:gzip,zlib
+	 * @param pTMXTilePropertyListener
+	 * @throws IOException
+	 * @throws IllegalArgumentException
+	 */
 	void initializeTMXTilesFromDataString(final String pDataString, final String pDataEncoding, final String pDataCompression, final ITMXTilePropertiesListener pTMXTilePropertyListener) throws IOException, IllegalArgumentException {
 		DataInputStream dataIn = null;
 		try{
