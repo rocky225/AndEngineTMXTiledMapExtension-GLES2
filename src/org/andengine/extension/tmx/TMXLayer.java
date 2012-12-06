@@ -49,11 +49,15 @@ public class TMXLayer extends SpriteBatch implements TMXConstants {
 	private final TMXTiledMap mTMXTiledMap;
 
 	private final String mName;
+	/** Layout's width **/
 	private final int mTileColumns;
+	/** Layout's height **/
 	private final int mTileRows;
 	private final TMXTile[][] mTMXTiles;
 
+	/** 用以判断当前的行和列,总小于mGlobalTileIDsExpected的值 **/
 	private int mTilesAdded;
+	/** 为Layout的width*height **/
 	private final int mGlobalTileIDsExpected;
 
 	private final float[] mCullingVertices = new float[2 * Sprite.VERTICES_PER_SPRITE];
@@ -263,9 +267,12 @@ public class TMXLayer extends SpriteBatch implements TMXConstants {
 	private void addTileByGlobalTileID(final int pGlobalTileID, final ITMXTilePropertiesListener pTMXTilePropertyListener) {
 		final TMXTiledMap tmxTiledMap = this.mTMXTiledMap;
 
+		// 每行列数 
 		final int tilesHorizontal = this.mTileColumns;
 
+		// 当前列 
 		final int column = this.mTilesAdded % tilesHorizontal;
+		// 当前行 
 		final int row = this.mTilesAdded / tilesHorizontal;
 
 		final TMXTile[][] tmxTiles = this.mTMXTiles;
@@ -311,16 +318,25 @@ public class TMXLayer extends SpriteBatch implements TMXConstants {
 		return pRow * this.mTileColumns + pColumn;
 	}
 
+	/**
+	 * 读取数据创建一个新的Int
+	 * @param pDataIn 数据流
+	 * @return
+	 * @throws IOException
+	 */
 	private int readGlobalTileID(final DataInputStream pDataIn) throws IOException {
 		final int lowestByte = pDataIn.read();
 		final int secondLowestByte = pDataIn.read();
 		final int secondHighestByte = pDataIn.read();
 		final int highestByte = pDataIn.read();
 
+		//判断读取的Int是否为负数
 		if(lowestByte < 0 || secondLowestByte < 0 || secondHighestByte < 0 || highestByte < 0) {
 			throw new IllegalArgumentException("Couldn't read global Tile ID.");
 		}
-
+		
+		// 11111111(highestByte),11111111(secondHighestByte),11111111(secondLowestByte),11111111(lowestByte)
+		//组成一个新的整数
 		return lowestByte | secondLowestByte <<  8 |secondHighestByte << 16 | highestByte << 24;
 	}
 

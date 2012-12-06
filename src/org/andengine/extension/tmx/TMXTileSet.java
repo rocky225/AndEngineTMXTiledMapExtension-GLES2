@@ -35,9 +35,13 @@ public class TMXTileSet implements TMXConstants {
 	// Fields
 	// ===========================================================
 
+	/** tileset的參數: firstgid **/
 	private final int mFirstGlobalTileID;
+	/** tileset的參數: name **/
 	private final String mName;
+	/** tileset的參數: tilewidth **/
 	private final int mTileWidth;
+	/** tileset的參數: tileheight **/
 	private final int mTileHeight;
 
 	private String mImageSource;
@@ -47,7 +51,9 @@ public class TMXTileSet implements TMXConstants {
 	private int mTilesHorizontal;
 	private int mTilesVertical;
 
+	/** tileset的參數: spacing **/
 	private final int mSpacing;
+	/** tileset的參數: margin **/
 	private final int mMargin;
 
 	private final SparseArray<TMXProperties<TMXTileProperty>> mTMXTileProperties = new SparseArray<TMXProperties<TMXTileProperty>>();
@@ -214,6 +220,11 @@ public class TMXTileSet implements TMXConstants {
 		}
 	}
 
+	/**
+	 * 
+	 * @param pGlobalTileID
+	 * @return
+	 */
 	public ITextureRegion getTextureRegionFromGlobalTileID(
 			final int pGlobalTileID) {
 		final int localTileID = pGlobalTileID - this.mFirstGlobalTileID;
@@ -229,6 +240,15 @@ public class TMXTileSet implements TMXConstants {
 				texturePositionY, this.mTileWidth, this.mTileHeight);
 	}
 
+	/**
+	 * 通过其参数,计算出tileSet分为多少份
+	 * 
+	 * @param pTotalExtent tileSet的图片长度
+	 * @param pTileExtent 每个tile的width
+	 * @param pMargin 每个tile的Margin
+	 * @param pSpacing 每个tile的Spacing
+	 * @return
+	 */
 	private static int determineCount(final int pTotalExtent,
 			final int pTileExtent, final int pMargin, final int pSpacing) {
 		int count = 0;

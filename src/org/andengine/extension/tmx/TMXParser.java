@@ -203,6 +203,7 @@ public class TMXParser extends DefaultHandler implements TMXConstants {
 		} else if(pLocalName.equals(TMXConstants.TAG_LAYER)){
 			this.mInLayer = false;
 		} else if(pLocalName.equals(TMXConstants.TAG_DATA)){
+			//DataCompression与DataEncoding都不为空=true
 			final boolean binarySaved = this.mDataCompression != null && this.mDataEncoding != null;
 			if(binarySaved) {
 				final ArrayList<TMXLayer> tmxLayers = this.mTMXTiledMap.getTMXLayers();

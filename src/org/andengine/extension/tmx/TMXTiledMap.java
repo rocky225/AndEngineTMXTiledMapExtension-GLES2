@@ -31,6 +31,7 @@ public class TMXTiledMap implements TMXConstants {
 	private final int mTileWidth;
 	private final int mTileHeight;
 
+	/** 一个存储所有tileset的List **/
 	private final ArrayList<TMXTileSet> mTMXTileSets = new ArrayList<TMXTileSet>();
 	private final ArrayList<TMXLayer> mTMXLayers = new ArrayList<TMXLayer>();
 	private final ArrayList<TMXObjectGroup> mTMXObjectGroups = new ArrayList<TMXObjectGroup>();
@@ -178,6 +179,7 @@ public class TMXTiledMap implements TMXConstants {
 
 			for(int i = tmxTileSets.size() - 1; i >= 0; i--) {
 				final TMXTileSet tmxTileSet = tmxTileSets.get(i);
+				//判断当前tileSet的firstId是否  <= pGlobalTileID
 				if(pGlobalTileID >= tmxTileSet.getFirstGlobalTileID()) {
 					final ITextureRegion textureRegion = tmxTileSet.getTextureRegionFromGlobalTileID(pGlobalTileID);
 					/* Add to cache for the all future pGlobalTileIDs with the same value. */
