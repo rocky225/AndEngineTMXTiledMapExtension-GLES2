@@ -264,6 +264,11 @@ public class TMXLayer extends SpriteBatch implements TMXConstants {
 		}
 	}
 
+	/**
+	 * 通过GlobalTileID
+	 * @param pGlobalTileID
+	 * @param pTMXTilePropertyListener
+	 */
 	private void addTileByGlobalTileID(final int pGlobalTileID, final ITMXTilePropertiesListener pTMXTilePropertyListener) {
 		final TMXTiledMap tmxTiledMap = this.mTMXTiledMap;
 
@@ -319,9 +324,9 @@ public class TMXLayer extends SpriteBatch implements TMXConstants {
 	}
 
 	/**
-	 * 读取数据创建一个新的Int
+	 * 读取数据创建一个新的GlobalTileID
 	 * @param pDataIn 数据流
-	 * @return
+	 * @return GlobalTileID
 	 * @throws IOException
 	 */
 	private int readGlobalTileID(final DataInputStream pDataIn) throws IOException {

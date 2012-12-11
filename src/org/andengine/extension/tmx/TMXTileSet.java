@@ -221,7 +221,7 @@ public class TMXTileSet implements TMXConstants {
 	}
 
 	/**
-	 * 
+	 * 通过pGlobalTileID获取当前图片资源
 	 * @param pGlobalTileID
 	 * @return
 	 */
@@ -231,8 +231,10 @@ public class TMXTileSet implements TMXConstants {
 		final int tileColumn = localTileID % this.mTilesHorizontal;
 		final int tileRow = localTileID / this.mTilesHorizontal;
 
+		//tileSet的X坐标
 		final int texturePositionX = this.mMargin
 				+ (this.mSpacing + this.mTileWidth) * tileColumn;
+		//tileSet的Y坐标
 		final int texturePositionY = this.mMargin
 				+ (this.mSpacing + this.mTileHeight) * tileRow;
 

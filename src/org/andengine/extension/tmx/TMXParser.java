@@ -208,6 +208,7 @@ public class TMXParser extends DefaultHandler implements TMXConstants {
 			if(binarySaved) {
 				final ArrayList<TMXLayer> tmxLayers = this.mTMXTiledMap.getTMXLayers();
 				try {
+					//初始化当前Layout
 					tmxLayers.get(tmxLayers.size() - 1).initializeTMXTilesFromDataString(this.mStringBuilder.toString().trim(), this.mDataEncoding, this.mDataCompression, this.mTMXTilePropertyListener);
 				} catch (final IOException e) {
 					Debug.e(e);
